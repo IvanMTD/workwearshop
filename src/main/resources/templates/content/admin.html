@@ -1,0 +1,3 @@
+<div>
+    Admin page
+</div>

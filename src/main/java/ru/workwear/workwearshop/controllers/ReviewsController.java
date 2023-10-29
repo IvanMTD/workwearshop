@@ -3,18 +3,14 @@ package ru.workwear.workwearshop.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomeController {
+@RequestMapping("/reviews")
+public class ReviewsController {
     @GetMapping()
-    public String homePage(Model model){
-        model.addAttribute("index",1);
-        return "home";
-    }
-
-    @GetMapping("/login")
-    public String loginPage(Model model){
-        model.addAttribute("index",7);
+    public String reviewsPage(Model model){
+        model.addAttribute("index",3);
         return "home";
     }
 }
