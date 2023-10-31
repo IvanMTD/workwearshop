@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "subjects")
 @NoArgsConstructor(force = true)
-public class Subject implements UserDetails {
+public class Subject {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,8 @@ public class Subject implements UserDetails {
     private Date placedAt;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "enabled")
     private boolean enabled;
@@ -42,30 +43,5 @@ public class Subject implements UserDetails {
     public void placedAt(){
         this.placedAt = new Date();
         this.enabled = true;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(getRole()));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
     }
 }

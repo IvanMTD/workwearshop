@@ -20,21 +20,15 @@ import ru.workwear.workwearshop.services.SubjectService;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final SubjectService subjectService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(subjectService).passwordEncoder(getPasswordEncoder());
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
-
         HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.ALL));
 
         return http
-                .authenticationManager(authenticationManager)
+                .authorizeHttpRequests(request -> request.anyRequest().permitAll())
                 .formLogin(configuration -> configuration
                         .loginPage("/login")
-                        .defaultSuccessUrl("/admin",true)
+                        .defaultSuccessUrl("/admin")
                 )
                 .logout(configuration -> configuration
                         .logoutUrl("/logout")

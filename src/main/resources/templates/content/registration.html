@@ -1,0 +1,24 @@
+<div>
+    Registration page
+    <form th:method="POST" th:action="@{/admin/registration}" th:object="${subject}">
+        <label for="username">Username: </label><br>
+        <input type="text" th:field="*{username}" id="username">
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red">error</p><br><br>
+        <label for="password">Password: </label><br>
+        <input type="password" th:field="*{password}" id="password">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red">error</p><br><br>
+        <label for="password_check">Confirm password: </label><br>
+        <input type="password" th:field="*{passwordCheck}" id="password_check">
+        <p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}" style="color: red">error</p><br><br>
+        <label for="birthday">Birthday: </label><br>
+        <input type="date" th:field="*{birthday}" id="birthday">
+        <p th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" style="color: red">error</p><br><br>
+        <label for="select">Choose role: </label><br>
+        <select id="select" th:field="*{role}">
+            <option th:each="role : ${roles}" th:text="${role.getTitle()}" th:value="${role}"></option>
+        </select><br><br>
+        <label for="checkbox"> Enabled: </label><br>
+        <input type="checkbox" id="checkbox" th:field="*{enabled}"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
