@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,7 @@ public class AdminController {
     private final SubjectService subjectService;
     private final PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping()
     public String adminPage(Model model){
         model.addAttribute("index",6);
@@ -56,14 +55,25 @@ public class AdminController {
     }
 
     @ModelAttribute(name = "auth")
-    public boolean auth(@AuthenticationPrincipal Subject user){
-        if(user != null){
-            if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+    public boolean auth(@AuthenticationPrincipal Subject subject) {
+        boolean isAdmin = authenticate(subject,Role.ROLE_ADMIN.getRole());
+        boolean isUser = authenticate(subject,Role.ROLE_USER.getRole());
+        return isAdmin || isUser;
+    }
+
+    @ModelAttribute(name = "admin")
+    public boolean admin(@AuthenticationPrincipal Subject subject) {
+        return authenticate(subject,Role.ROLE_ADMIN.getRole());
+    }
+
+    private boolean authenticate (Subject subject, String role){
+        if (subject != null) {
+            if (subject.getRole().getRole().equals(role)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }

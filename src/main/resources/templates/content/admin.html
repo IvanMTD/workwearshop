@@ -1,4 +1,7 @@
-<div>
+<div th:if="${admin}">
     Admin page
     <a th:href="@{/admin/registration}">Registration</a>
+    <!--<div th:each="subject : ${subjects}">
+
+    </div>-->
 </div>

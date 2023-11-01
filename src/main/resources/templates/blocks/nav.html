@@ -5,7 +5,7 @@
         <li><a th:href="@{/reviews}">Книга отзывов</a></li>
         <li><a th:href="@{/contact}">Контакты</a></li>
         <li><a th:href="@{/about}">О нас</a></li>
-        <li><a th:href="@{/admin}">Админка</a></li>
+        <li th:if="${auth}"><a th:href="@{/admin}">Админка</a></li>
         <li th:if="${!auth}"><a th:href="@{/login}">Вход</a></li>
         <li th:if="${auth}"><a th:href="@{/logout}">Выход</a></li>
     </ul>
