@@ -1,0 +1,6 @@
+<div>
+    Category creator page
+    <form th:method="POST" th:action="@{/admin/category}" th:object="${category}" enctype="multipart/form-data">
+        <input type="text" id="name" th:field="*{name}">
+    </form>
+</div>

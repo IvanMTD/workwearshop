@@ -1,4 +1,4 @@
-package ru.workwear.workwearshop.models;
+package ru.workwear.workwearshop.enums;
 
 public enum Role {
     ROLE_ADMIN("Administration","ROLE_ADMIN"),

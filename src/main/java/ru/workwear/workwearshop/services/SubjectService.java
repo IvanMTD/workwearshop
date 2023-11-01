@@ -11,7 +11,6 @@ import ru.workwear.workwearshop.dto.SubjectDTO;
 import ru.workwear.workwearshop.models.Subject;
 import ru.workwear.workwearshop.repositories.SubjectRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Data

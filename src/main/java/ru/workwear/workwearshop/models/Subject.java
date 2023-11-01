@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.workwear.workwearshop.enums.Role;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 public class Subject implements UserDetails {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -40,9 +43,8 @@ public class Subject implements UserDetails {
     private boolean enabled;
 
     @PrePersist
-    public void placedAt(){
+    public void placedAt() {
         this.placedAt = new Date();
-        this.enabled = true;
     }
 
     @Override

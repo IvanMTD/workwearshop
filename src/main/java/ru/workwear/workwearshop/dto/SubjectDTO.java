@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.workwear.workwearshop.models.Role;
+import ru.workwear.workwearshop.enums.Role;
 
 import java.util.Date;
 

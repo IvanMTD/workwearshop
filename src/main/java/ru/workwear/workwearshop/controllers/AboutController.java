@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.workwear.workwearshop.models.Role;
+import ru.workwear.workwearshop.enums.Role;
 import ru.workwear.workwearshop.models.Subject;
 
 @Controller
@@ -20,7 +20,7 @@ public class AboutController {
 
     @ModelAttribute(name = "auth")
     public boolean auth(@AuthenticationPrincipal Subject subject) {
-        boolean isAdmin = authenticate(subject,Role.ROLE_ADMIN.getRole());
+        boolean isAdmin = authenticate(subject, Role.ROLE_ADMIN.getRole());
         boolean isUser = authenticate(subject,Role.ROLE_USER.getRole());
         return isAdmin || isUser;
     }
