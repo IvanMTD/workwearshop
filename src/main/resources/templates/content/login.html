@@ -1,6 +1,8 @@
 <div>
     <div th:if="${param.error}" style="color: red">
-        Wrong username or password
+        <div th:each="error : ${param.error}">
+            <p>Invalid username and password</p>
+        </div>
     </div>
     <form th:method="POST" th:action="@{/login}" id="loginForm">
         <label for="username">Username: </label><br>

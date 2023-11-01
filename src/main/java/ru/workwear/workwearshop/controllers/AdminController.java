@@ -32,6 +32,7 @@ public class AdminController {
         return "home";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/registration")
     public String registrationPage(Model model){
         model.addAttribute("index",8);
@@ -40,6 +41,7 @@ public class AdminController {
         return "home";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/registration")
     public String registrationConfirm(Model model, @ModelAttribute(name = "subject") @Valid SubjectDTO subjectDTO, Errors errors){
         subjectValidator.validate(subjectDTO,errors);
@@ -54,7 +56,7 @@ public class AdminController {
     }
 
     @ModelAttribute(name = "auth")
-    public boolean auth(@AuthenticationPrincipal User user){
+    public boolean auth(@AuthenticationPrincipal Subject user){
         if(user != null){
             if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
                 return true;
