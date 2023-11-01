@@ -11,6 +11,7 @@ import ru.workwear.workwearshop.dto.SubjectDTO;
 import ru.workwear.workwearshop.models.Subject;
 import ru.workwear.workwearshop.repositories.SubjectRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -18,6 +19,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubjectService implements UserDetailsService {
     private final SubjectRepository subjectRepository;
+
+    public Iterable<Subject> findAll(){
+        return subjectRepository.findAll();
+    }
 
     public Subject save(SubjectDTO subjectDTO, PasswordEncoder passwordEncoder){
         Subject subject = new Subject();
@@ -36,5 +41,9 @@ public class SubjectService implements UserDetailsService {
             throw new UsernameNotFoundException("Subject '" + username + "' is not found");
         }
         return optionalSubject.get();
+    }
+
+    public Subject findById(long id) {
+        return subjectRepository.findById(id).orElse(null);
     }
 }

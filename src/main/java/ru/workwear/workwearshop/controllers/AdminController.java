@@ -28,6 +28,15 @@ public class AdminController {
     @GetMapping()
     public String adminPage(Model model){
         model.addAttribute("index",6);
+        model.addAttribute("subjects",subjectService.findAll());
+        return "home";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/subject/{id}")
+    public String subjectPage(Model model, @PathVariable(name = "id") long id){
+        model.addAttribute("index",9);
+        model.addAttribute("subject",subjectService.findById(id));
         return "home";
     }
 
