@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.workwear.workwearshop.dto.CategoryDTO;
 import ru.workwear.workwearshop.dto.SubjectDTO;
 import ru.workwear.workwearshop.enums.Role;
 import ru.workwear.workwearshop.models.Subject;
+import ru.workwear.workwearshop.services.CategoryService;
 import ru.workwear.workwearshop.services.SubjectService;
 import ru.workwear.workwearshop.validation.SubjectValidator;
 
@@ -23,6 +25,7 @@ public class AdminController {
 
     private final SubjectValidator subjectValidator;
     private final SubjectService subjectService;
+    private final CategoryService categoryService;
     private final PasswordEncoder passwordEncoder;
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
@@ -64,11 +67,23 @@ public class AdminController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/category")
     public String categoryCreatorPage(Model model){
         model.addAttribute("index",10);
         model.addAttribute("category", new CategoryDTO());
         return "home";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/category")
+    public String categoryAdd(Model model, @ModelAttribute(name = "category") @Valid CategoryDTO category, Errors errors){
+        if(errors.hasErrors()){
+            model.addAttribute("index",10);
+            return "home";
+        }
+        categoryService.save(category);
+        return "redirect:/admin";
     }
 
     @ModelAttribute(name = "auth")

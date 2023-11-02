@@ -7,3 +7,10 @@ create table if not exists subjects (
     role text not null,
     enabled boolean
 );
+
+create table if not exists category (
+    id long primary key auto_increment,
+    name varchar(32) not null,
+    description text not null,
+    image blob not null
+);

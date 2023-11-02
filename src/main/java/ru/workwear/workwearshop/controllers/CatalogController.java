@@ -1,5 +1,6 @@
 package ru.workwear.workwearshop.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,13 +9,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.workwear.workwearshop.enums.Role;
 import ru.workwear.workwearshop.models.Subject;
+import ru.workwear.workwearshop.services.CategoryService;
 
 @Controller
 @RequestMapping("/catalog")
+@RequiredArgsConstructor
 public class CatalogController {
+
+    private final CategoryService categoryService;
+
     @GetMapping()
     public String catalogPage(Model model){
         model.addAttribute("index",2);
+        model.addAttribute("categories", categoryService.findAllLazy());
         return "home";
     }
 

@@ -7,10 +7,16 @@ import java.util.Base64;
 
 public class ImageEncryptUtil {
     public static String loadImage(String path){
+        return getImgData(getImageBlob(path));
+    }
+
+    public static byte[] getImageBlob(String path){
         File file = new File(path);
         if(file.exists()){
+            System.out.println("File exist!");
             try {
-                return getImgData(Files.readAllBytes(file.toPath()));
+                System.out.println("Try load bytes array");
+                return Files.readAllBytes(file.toPath());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

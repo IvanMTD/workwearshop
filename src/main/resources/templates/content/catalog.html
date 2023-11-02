@@ -1,3 +1,10 @@
 <div>
     Catalog page
+    <div th:each="category : ${categories}">
+        <hr>
+        <img th:src="'data:image/png;base64,' + ${category.getImage()}" width="20%" height="20%"/><br>
+        <p th:text="${category.getName()}"></p>
+        <p th:text="${category.getDescription()}"></p>
+        <hr>
+    </div>
 </div>
