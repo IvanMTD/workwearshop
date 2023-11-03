@@ -9,6 +9,8 @@
         <label for="description">Description: </label><br>
         <textarea type="text" id="description" th:field="*{description}" rows="10" cols="50" style="resize: none"></textarea>
         <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Name error</span><br>
+        <label for="checkbox"> For internal use </label>
+        <input type="checkbox" id="checkbox" th:field="*{internal}"><br><br>
         <input type="submit" value="Submit">
     </form>
 </div>

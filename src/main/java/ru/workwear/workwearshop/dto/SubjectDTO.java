@@ -11,6 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class SubjectDTO {
+    private long id;
     @NotBlank(message = "The field cannot be empty")
     @Size(min = 4, max = 16, message = "The length of the user name must be from 4 to 16 characters")
     private String username;

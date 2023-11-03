@@ -12,5 +12,6 @@ create table if not exists category (
     id long primary key auto_increment,
     name varchar(32) not null,
     description text not null,
+    internal boolean not null,
     image blob not null
 );

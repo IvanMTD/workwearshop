@@ -22,6 +22,7 @@ public class CategoryService {
         Category category = new Category();
         category.setName(categoryDTO.getName());
         category.setDescription(categoryDTO.getDescription());
+        category.setInternal(categoryDTO.isInternal());
         if(!categoryDTO.getFile().isEmpty()){
             try {
                 category.setImage(categoryDTO.getFile().getBytes());
@@ -37,16 +38,24 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public List<CategoryDTO> findAllLazy() {
+    public List<CategoryDTO> findAllLazy(boolean authFactor) {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryDTO> categoriesDTO = new ArrayList<>();
         for(Category category : categories){
             CategoryDTO categoryDTO = new CategoryDTO();
+            categoryDTO.setId(category.getId());
             categoryDTO.setName(category.getName());
             categoryDTO.setDescription(category.getDescription());
+            categoryDTO.setInternal(category.isInternal());
             categoryDTO.setImage(ImageEncryptUtil.getImgData(category.getImage()));
             categoryDTO.setProducts(new ArrayList<>());
-            categoriesDTO.add(categoryDTO);
+            if(authFactor){
+                categoriesDTO.add(categoryDTO);
+            }else{
+                if(!categoryDTO.isInternal()){
+                    categoriesDTO.add(categoryDTO);
+                }
+            }
         }
         return categoriesDTO;
     }

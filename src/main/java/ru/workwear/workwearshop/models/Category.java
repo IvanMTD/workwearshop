@@ -25,6 +25,8 @@ public class Category implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
+    @Column(name = "internal")
+    private boolean internal;
     @Column(name = "image")
     private byte[] image;
 

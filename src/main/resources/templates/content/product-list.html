@@ -1,0 +1,9 @@
+<div>
+    Product list page
+    <div th:each="product : ${products}">
+        <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="10%" height="10%"/><br>
+        <p th:text="${product.getName()}"></p>
+        <p th:text="${product.getDescription()}"></p>
+        <p th:text="${product.getCoast()}"></p>
+    </div>
+</div>

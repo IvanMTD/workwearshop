@@ -13,15 +13,12 @@ public class ImageEncryptUtil {
     public static byte[] getImageBlob(String path){
         File file = new File(path);
         if(file.exists()){
-            System.out.println("File exist!");
             try {
-                System.out.println("Try load bytes array");
                 return Files.readAllBytes(file.toPath());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }else{
-            System.out.println("file is empty");
             return null;
         }
     }
