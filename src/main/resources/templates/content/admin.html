@@ -1,11 +1,12 @@
 <div>
     Admin page
-    <div th:if="${admin}">
-        <a th:href="@{/admin/registration}">Registration</a><br>
-        <a th:href="@{/admin/category}">Add Category</a><br><hr>
-        <div th:each="subject : ${subjects}">
-            <a th:href="@{/admin/subject/{id}(id=${subject.getId()})}" th:text="${subject.getUsername()}"></a>
-        </div>
+    <div>
+        <a th:href="@{/admin/registration}" th:if="${admin}"><p>Registration</p></a>
+        <a th:href="@{/admin/category}" th:if="${admin}"><p>Add Category</p></a>
+        <a th:href="@{/admin/product}"><p>Add Product</p></a>
     </div>
-    <hr>
+    <div th:each="subject : ${subjects}" th:if="${admin}">
+        <hr>
+        <a th:href="@{/admin/subject/{id}(id=${subject.getId()})}"><p th:text="${subject.getUsername()}"></p></a>
+    </div>
 </div>

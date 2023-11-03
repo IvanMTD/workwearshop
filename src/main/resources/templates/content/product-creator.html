@@ -1,0 +1,13 @@
+<div>
+    Product creator page
+    <form th:method="POST" th:action="@{/admin/product}" th:object="${product}" enctype="multipart/form-data">
+        <input type="text" id="name" th:field="*{name}"><br>
+        <textarea id="description" th:field="*{description}"rows="10" cols="50" style="resize: none"></textarea><br>
+        <input type="file" accept="image/jpeg" th:field="*{file}"><br>
+        <select name="select">
+            <option th:each="cat : ${categories}" th:text="${cat.getName()}" th:value="${cat.getId()}"></option>
+        </select><br>
+        <input type="number" th:field="*{coast}"><br>
+        <input type="submit" value="Submit"><br>
+    </form>
+</div>

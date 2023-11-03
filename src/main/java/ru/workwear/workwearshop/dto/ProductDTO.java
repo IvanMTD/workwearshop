@@ -15,7 +15,6 @@ public class ProductDTO {
     private String name;
     private String description;
     private BigDecimal coast;
-    private Date placedAt;
     private MultipartFile file;
     private String image;
     private CategoryDTO category;

@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.workwear.workwearshop.dto.CategoryDTO;
+import ru.workwear.workwearshop.dto.ProductDTO;
 import ru.workwear.workwearshop.dto.SubjectDTO;
 import ru.workwear.workwearshop.enums.Role;
+import ru.workwear.workwearshop.models.Product;
 import ru.workwear.workwearshop.models.Subject;
 import ru.workwear.workwearshop.services.CategoryService;
 import ru.workwear.workwearshop.services.SubjectService;
@@ -28,6 +29,8 @@ public class AdminController {
     private final CategoryService categoryService;
     private final PasswordEncoder passwordEncoder;
 
+    // ========================================== BASE ADMIN PAGE ====================================================
+
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping()
     public String adminPage(Model model){
@@ -35,6 +38,8 @@ public class AdminController {
         model.addAttribute("subjects",subjectService.findAll());
         return "home";
     }
+
+    // =========================================== SUBJECT CONTROL ====================================================
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/subject/{id}")
@@ -67,6 +72,8 @@ public class AdminController {
         return "redirect:/";
     }
 
+    // =============================================== CATEGORY ======================================================
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/category")
     public String categoryCreatorPage(Model model){
@@ -85,6 +92,26 @@ public class AdminController {
         categoryService.save(category);
         return "redirect:/admin";
     }
+
+    //============================================= PRODUCT CONTROL ==================================================
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @GetMapping("/product")
+    public String productCreatorPage(Model model){
+        model.addAttribute("index",12);
+        model.addAttribute("product", new ProductDTO());
+        model.addAttribute("categories", categoryService.findAllLazy());
+        return "home";
+    }
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PostMapping("/product")
+    public String productAdd(@ModelAttribute(name = "product") ProductDTO product,@RequestParam(name = "select") long id){
+        System.out.println(product);
+        return "redirect:/admin";
+    }
+
+    //============================================== MODEL ATTRIBUTE =================================================
 
     @ModelAttribute(name = "auth")
     public boolean auth(@AuthenticationPrincipal Subject subject) {

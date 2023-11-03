@@ -38,17 +38,21 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public List<CategoryDTO> findAllLazy() {
+        List<Category> categories = categoryRepository.findAll();
+        List<CategoryDTO> categoriesDTO = new ArrayList<>();
+        for(Category category : categories){
+            CategoryDTO categoryDTO = getInstanceCategoryDTO(category);
+            categoriesDTO.add(categoryDTO);
+        }
+        return categoriesDTO;
+    }
+
     public List<CategoryDTO> findAllLazy(boolean authFactor) {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryDTO> categoriesDTO = new ArrayList<>();
         for(Category category : categories){
-            CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setId(category.getId());
-            categoryDTO.setName(category.getName());
-            categoryDTO.setDescription(category.getDescription());
-            categoryDTO.setInternal(category.isInternal());
-            categoryDTO.setImage(ImageEncryptUtil.getImgData(category.getImage()));
-            categoryDTO.setProducts(new ArrayList<>());
+            CategoryDTO categoryDTO = getInstanceCategoryDTO(category);
             if(authFactor){
                 categoriesDTO.add(categoryDTO);
             }else{
@@ -58,5 +62,16 @@ public class CategoryService {
             }
         }
         return categoriesDTO;
+    }
+
+    private CategoryDTO getInstanceCategoryDTO(Category category){
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(category.getId());
+        categoryDTO.setName(category.getName());
+        categoryDTO.setDescription(category.getDescription());
+        categoryDTO.setInternal(category.isInternal());
+        categoryDTO.setImage(ImageEncryptUtil.getImgData(category.getImage()));
+        categoryDTO.setProducts(new ArrayList<>());
+        return categoryDTO;
     }
 }
